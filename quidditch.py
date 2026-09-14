@@ -260,17 +260,17 @@ with tab1:
                     possession=st.session_state.possession,
                     team_a=st.session_state.team_a,
                     team_b=st.session_state.team_b
-            )
+                )
 
-            # Обновляем состояние матча
-            st.session_state.score_a += result["score_a"]
-            st.session_state.score_b += result["score_b"]
-            st.session_state.possession = result["possession"]
-            st.session_state.snitch_status = result["snitch_status"]
-            st.session_state.log.append(result["text"])
+                # Обновляем состояние матча
+                st.session_state.score_a += result["score_a"]
+                st.session_state.score_b += result["score_b"]
+                st.session_state.possession = result["possession"]
+                st.session_state.snitch_status = result["snitch_status"]
+                st.session_state.log.append(result["text"])
 
-    st.success("Раунд рассчитан!")
-    st.rerun()
+                st.success("Раунд рассчитан!")
+                st.rerun()
 
 
             if st.button("Следующий раунд", use_container_width=True):
