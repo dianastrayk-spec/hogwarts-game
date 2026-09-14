@@ -250,24 +250,24 @@ with tab1:
         with col2:
             st.markdown("### Действия")
             if st.button("Рассчитать раунд", type="primary", use_container_width=True):
-    result = calculate_round(
-        roll_a=roll_chaser_a,
-        roll_b=roll_chaser_b,
-        roll_beater=roll_beater,
-        roll_keeper=roll_keeper,
-        roll_seeker=roll_seeker,
-        round_num=st.session_state.round,
-        possession=st.session_state.possession,
-        team_a=st.session_state.team_a,
-        team_b=st.session_state.team_b
-    )
+                result = calculate_round(
+                    roll_a=roll_chaser_a,
+                    roll_b=roll_chaser_b,
+                    roll_beater=roll_beater,
+                    roll_keeper=roll_keeper,
+                    roll_seeker=roll_seeker,
+                    round_num=st.session_state.round,
+                    possession=st.session_state.possession,
+                    team_a=st.session_state.team_a,
+                    team_b=st.session_state.team_b
+            )
 
-    # Обновляем состояние матча
-    st.session_state.score_a += result["score_a"]
-    st.session_state.score_b += result["score_b"]
-    st.session_state.possession = result["possession"]
-    st.session_state.snitch_status = result["snitch_status"]
-    st.session_state.log.append(result["text"])
+            # Обновляем состояние матча
+            st.session_state.score_a += result["score_a"]
+            st.session_state.score_b += result["score_b"]
+            st.session_state.possession = result["possession"]
+            st.session_state.snitch_status = result["snitch_status"]
+            st.session_state.log.append(result["text"])
 
     st.success("Раунд рассчитан!")
     st.rerun()
