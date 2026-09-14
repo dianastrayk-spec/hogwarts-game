@@ -391,31 +391,6 @@ if st.session_state.matches:
 else:
     st.info("Нет данных для таблицы")
 
-        stats[match["team_a"]]["Игры"] += 1
-        stats[match["team_b"]]["Игры"] += 1
-
-        if match["score_a"] > match["score_b"]:
-            stats[match["team_a"]]["Победы"] += 1
-            stats[match["team_b"]]["Поражения"] += 1
-            stats[match["team_a"]]["Очки"] += 3
-        elif match["score_b"] > match["score_a"]:
-            stats[match["team_b"]]["Победы"] += 1
-            stats[match["team_a"]]["Поражения"] += 1
-            stats[match["team_b"]]["Очки"] += 3
-
-        if match["snitch"] == match["team_a"]:
-            stats[match["team_a"]]["Снитчи"] += 1
-        elif match["snitch"] == match["team_b"]:
-            stats[match["team_b"]]["Снитчи"] += 1
-
-    import pandas as pd
-    df = pd.DataFrame.from_dict(stats, orient="index")
-    df = df.sort_values(by=["Очки", "Победы", "Снитчи"], ascending=False)
-    st.dataframe(df, use_container_width=True)
-else:
-    st.info("Нет данных для таблицы")
-
-
 with tab3:
     st.subheader("Настройки и таблицы событий")
     st.info("Здесь позже можно будет редактировать таблицы исходов")
