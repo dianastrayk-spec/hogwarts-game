@@ -334,13 +334,13 @@ with tab2:
                     f"**{match['date']}**  \n"
                     f"{match['team_a']} {match['score_a']} — {match['score_b']} {match['team_b']}  \n"
                     f"Снитч: {match['snitch']}"
-                )
-               if st.button(f"Удалить матч", key=f"delete_{i}"):
-                    # Удаляем из оригинального списка
-                    real_index = len(st.session_state.matches) - 1 - i
-                    st.session_state.matches.pop(real_index)
-                    st.rerun()
-                st.markdown("---")
+            )
+            if st.button(f"Удалить матч", key=f"delete_{i}"):
+                # Удаляем из оригинального списка
+                real_index = len(st.session_state.matches) - 1 - i
+                st.session_state.matches.pop(real_index)
+                st.rerun()
+            st.markdown("---")
 
 
 with tab3:
