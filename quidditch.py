@@ -288,8 +288,60 @@ with tab1:
             st.markdown("---")
 
 with tab2:
-    st.subheader("Чемпионат")
-    st.info("Раздел статистики и турнирной таблицы появится позже")
+    st.subheader("Чемпионат и история матчей")
+
+    # Инициализация списка матчей
+    if "matches" not in st.session_state:
+        st.session_state.matches = []
+
+    # ----- Форма добавления матча -----
+    with st.expander("Добавить прошедший матч", expanded=False):
+        col1, col2 = st.columns(2)
+
+        with col1:
+            add_team_a = st.selectbox("Команда А", st.session_state.custom_teams, key="add_team_a")
+            score_a = st.number_input("Очки команды А", min_value=0, value=0, step=10, key="add_score_a")
+
+        with col2:
+            add_team_b = st.selectbox("Команда Б", st.session_state.custom_teams, key="add_team_b")
+            score_b = st.number_input("Очки команды Б", min_value=0, value=0, step=10, key="add_score_b")
+
+        snitch = st.selectbox("Кто поймал снитч?", ["Никто", add_team_a, add_team_b], key="add_snitch")
+        match_date = st.date_input("Дата матча")
+
+        if st.button("Сохранить матч"):
+            new_match = {
+                "date": str(match_date),
+                "team_a": add_team_a,
+                "team_b": add_team_b,
+                "score_a": score_a,
+                "score_b": score_b,
+                "snitch": snitch
+            }
+            st.session_state.matches.append(new_match)
+            st.success("Матч добавлен!")
+            st.rerun()
+
+    st.divider()
+    st.subheader("История матчей")
+
+    if not st.session_state.matches:
+        st.info("Пока нет сохранённых матчей")
+    else:
+        for i, match in enumerate(reversed(st.session_state.matches)):
+            with st.container():
+                st.markdown(
+                    f"**{match['date']}**  \n"
+                    f"{match['team_a']} {match['score_a']} — {match['score_b']} {match['team_b']}  \n"
+                    f"Снитч: {match['snitch']}"
+                )
+               if st.button(f"Удалить матч", key=f"delete_{i}"):
+                    # Удаляем из оригинального списка
+                    real_index = len(st.session_state.matches) - 1 - i
+                    st.session_state.matches.pop(real_index)
+                    st.rerun()
+                st.markdown("---")
+
 
 with tab3:
     st.subheader("Настройки и таблицы событий")
