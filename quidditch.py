@@ -290,12 +290,26 @@ with tab1:
 with tab2:
     st.subheader("Чемпионат и история матчей")
 
-    # Инициализация списка матчей
+    # Инициализация
     if "matches" not in st.session_state:
         st.session_state.matches = []
 
-    # ----- Форма добавления матча -----
-    with st.expander("Добавить прошедший матч", expanded=False):
+    # ===== Загрузка матчей из файла =====
+    st.markdown("### Загрузить историю матчей")
+    uploaded_file = st.file_uploader("Загрузить CSV с матчами", type=["csv"])
+
+    if uploaded_file is not None:
+        try:
+            import pandas as pd
+            df_uploaded = pd.read_csv(uploaded_file)
+            st.session_state.matches = df_uploaded.to_dict("records")
+            st.success(f"Загружено матчей: {len(st.session_state.matches)}")
+            st.rerun()
+        except Exception as e:
+            st.error(f"Ошибка при загрузке файла: {e}")
+
+    # ===== Добавление матча вручную =====
+    with st.expander("Добавить прошедший матч вручную"):
         col1, col2 = st.columns(2)
 
         with col1:
@@ -314,8 +328,8 @@ with tab2:
                 "date": str(match_date),
                 "team_a": add_team_a,
                 "team_b": add_team_b,
-                "score_a": score_a,
-                "score_b": score_b,
+                "score_a": int(score_a),
+                "score_b": int(score_b),
                 "snitch": snitch
             }
             st.session_state.matches.append(new_match)
@@ -323,52 +337,79 @@ with tab2:
             st.rerun()
 
     st.divider()
+
+    # ===== История матчей =====
     st.subheader("История матчей")
 
     if not st.session_state.matches:
         st.info("Пока нет сохранённых матчей")
     else:
         for i, match in enumerate(reversed(st.session_state.matches)):
-            with st.container():
-                st.markdown(
-                    f"**{match['date']}**  \n"
-                    f"{match['team_a']} {match['score_a']} — {match['score_b']} {match['team_b']}  \n"
-                    f"Снитч: {match['snitch']}"
+            st.markdown(
+                f"**{match['date']}**  \n"
+                f"{match['team_a']} {match['score_a']} — {match['score_b']} {match['team_b']}  \n"
+                f"Снитч: {match['snitch']}"
             )
-            if st.button(f"Удалить матч", key=f"delete_{i}"):
-                # Удаляем из оригинального списка
+            if st.button("Удалить матч", key=f"delete_{i}"):
                 real_index = len(st.session_state.matches) - 1 - i
                 st.session_state.matches.pop(real_index)
                 st.rerun()
             st.markdown("---")
 
-st.divider()
-st.subheader("Выгрузка данных")
+    # ===== Турнирная таблица =====
+    st.divider()
+    st.subheader("Турнирная таблица")
 
-# Выгрузка всех матчей
-if st.session_state.get("matches"):
-    import pandas as pd
-    df_matches = pd.DataFrame(st.session_state.matches)
-    csv_matches = df_matches.to_csv(index=False).encode("utf-8")
-        
-    st.download_button(
-        label="Скачать все матчи (CSV)",
-        data=csv_matches,
-        file_name="quidditch_matches.csv",
-        mime="text/csv"
-    )
-else:
-    st.info("Нет матчей для выгрузки")
+    if st.session_state.matches:
+        stats = {}
 
-# Выгрузка истории раундов текущего матча
-if st.session_state.get("log"):
-    log_text = "\n\n".join(st.session_state.log)
-    st.download_button(
-        label="Скачать историю раундов текущего матча",
-        data=log_text,
-        file_name=f"match_log_{st.session_state.team_a}_vs_{st.session_state.team_b}.txt",
-        mime="text/plain"
-    )
+        for match in st.session_state.matches:
+            for team in [match["team_a"], match["team_b"]]:
+                if team not in stats:
+                    stats[team] = {"Игры": 0, "Победы": 0, "Поражения": 0, "Очки": 0, "Снитчи": 0}
+
+            stats[match["team_a"]]["Игры"] += 1
+            stats[match["team_b"]]["Игры"] += 1
+            stats[match["team_a"]]["Очки"] += match["score_a"]
+            stats[match["team_b"]]["Очки"] += match["score_b"]
+
+            if match["score_a"] > match["score_b"]:
+                stats[match["team_a"]]["Победы"] += 1
+                stats[match["team_b"]]["Поражения"] += 1
+            elif match["score_b"] > match["score_a"]:
+                stats[match["team_b"]]["Победы"] += 1
+                stats[match["team_a"]]["Поражения"] += 1
+
+            if match["snitch"] == match["team_a"]:
+                stats[match["team_a"]]["Снитчи"] += 1
+            elif match["snitch"] == match["team_b"]:
+                stats[match["team_b"]]["Снитчи"] += 1
+
+        import pandas as pd
+        df = pd.DataFrame.from_dict(stats, orient="index")
+        df = df.sort_values(by=["Очки", "Победы", "Снитчи"], ascending=False)
+        st.dataframe(df, use_container_width=True)
+
+        leader = df.index[0]
+        st.success(f"Сейчас лидирует: **{leader}** с {int(df.loc[leader, 'Очки'])} очками")
+    else:
+        st.info("Нет данных для таблицы")
+
+    # ===== Выгрузка =====
+    st.divider()
+    st.subheader("Выгрузка данных")
+
+    if st.session_state.matches:
+        import pandas as pd
+        df_matches = pd.DataFrame(st.session_state.matches)
+        csv_matches = df_matches.to_csv(index=False, encoding="utf-8-sig").encode("utf-8-sig")
+
+        st.download_button(
+            label="Скачать все матчи (CSV)",
+            data=csv_matches,
+            file_name="quidditch_matches.csv",
+            mime="text/csv"
+        )
 
             
 # ----- Турнирная таблица -----
