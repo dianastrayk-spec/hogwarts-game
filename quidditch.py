@@ -206,12 +206,38 @@ with st.sidebar:
         st.success(f"Матч начат: {team_a} vs {team_b}") 
 
     st.divider()
-    st.write(f"**Текущий матч:**")
+    st.write("**Текущий матч:**")
     st.write(f"{st.session_state.team_a} vs {st.session_state.team_b}")
-    st.write(f"Раунд: {st.session_state.round}")
-    st.write(f"Счёт: {st.session_state.score_a} — {st.session_state.score_b}")
-    st.write(f"Владение: {st.session_state.possession or 'Не определено'}")
-    st.write(f"Снитч: {st.session_state.snitch_status}")
+    st.write(f"**Раунд:** {st.session_state.round}")
+    st.write(f"**Счёт:** {st.session_state.score_a} — {st.session_state.score_b}")
+    
+    # Статус владения
+    quaffle = st.session_state.possession
+    if quaffle == "A":
+        st.write(f"**Квоффл:** {st.session_state.team_a}")
+    elif quaffle == "B":
+        st.write(f"**Квоффл:** {st.session_state.team_b}")
+    else:
+        st.write("**Квоффл:** Не определён")
+
+    # Бладжеры
+    bludger = st.session_state.get("bludger_control")
+    if bludger == "A":
+        st.write(f"**Бладжеры:** {st.session_state.team_a}")
+    elif bludger == "B":
+        st.write(f"**Бладжеры:** {st.session_state.team_b}")
+    else:
+        st.write("**Бладжеры:** Свободны")
+
+    st.write(f"**Снитч:** {st.session_state.snitch_status}")
+
+    # Активные эффекты
+    if st.session_state.get("active_effects"):
+        st.write("**Активные эффекты:**")
+        for effect in st.session_state.active_effects:
+            st.write(f"- {effect}")
+
+
 
 # ======================
 # ОСНОВНАЯ ЧАСТЬ
