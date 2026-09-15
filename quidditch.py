@@ -392,6 +392,16 @@ with tab2:
 
         leader = df.index[0]
         st.success(f"Сейчас лидирует: **{leader}** с {int(df.loc[leader, 'Очки'])} очками")
+
+        # Кнопка скачать турнирную таблицу
+        csv_table = df.to_csv(index=True, encoding="utf-8-sig").encode("utf-8-sig")
+        st.download_button(
+            label="Скачать турнирную таблицу (CSV)",
+            data=csv_table,
+            file_name="quidditch_standings.csv",
+            mime="text/csv"
+        )
+
     else:
         st.info("Нет данных для таблицы")
 
