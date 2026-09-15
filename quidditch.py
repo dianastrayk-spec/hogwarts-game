@@ -24,6 +24,8 @@ if "match_active" not in st.session_state:
     st.session_state.snitch_status = "Не появился"
     st.session_state.team_a = "Гриффиндор"
     st.session_state.team_b = "Слизерин"
+    st.session_state.bludger_control = None    # "A", "B" или None
+    st.session_state.active_effects = []       # список активных эффектов
     st.session_state.log = []
 def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round_num, possession, team_a, team_b):
     """
@@ -221,6 +223,20 @@ with tab1:
         st.info("Выбери команды и нажми «Начать новый матч» в боковой панели")
     else:
         st.subheader(f"Раунд {st.session_state.round}")
+
+        # Быстрый статус
+        status_col1, status_col2, status_col3 = st.columns(3)
+        with status_col1:
+            q = st.session_state.possession
+            q_text = st.session_state.team_a if q == "A" else st.session_state.team_b if q == "B" else "—"
+            st.info(f"**Квоффл:** {q_text}")
+        with status_col2:
+            b = st.session_state.get("bludger_control")
+            b_text = st.session_state.team_a if b == "A" else st.session_state.team_b if b == "B" else "Свободны"
+            st.info(f"**Бладжеры:** {b_text}")
+        with status_col3:
+            st.info(f"**Снитч:** {st.session_state.snitch_status}")
+
 
         col1, col2 = st.columns(2)
 
