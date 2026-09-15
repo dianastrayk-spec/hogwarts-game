@@ -341,6 +341,35 @@ with tab2:
                 st.session_state.matches.pop(real_index)
                 st.rerun()
             st.markdown("---")
+
+ st.divider()
+    st.subheader("Выгрузка данных")
+
+    # Выгрузка всех матчей
+    if st.session_state.get("matches"):
+        import pandas as pd
+        df_matches = pd.DataFrame(st.session_state.matches)
+        csv_matches = df_matches.to_csv(index=False).encode("utf-8")
+        
+        st.download_button(
+            label="Скачать все матчи (CSV)",
+            data=csv_matches,
+            file_name="quidditch_matches.csv",
+            mime="text/csv"
+        )
+    else:
+        st.info("Нет матчей для выгрузки")
+
+    # Выгрузка истории раундов текущего матча
+    if st.session_state.get("log"):
+        log_text = "\n\n".join(st.session_state.log)
+        st.download_button(
+            label="Скачать историю раундов текущего матча",
+            data=log_text,
+            file_name=f"match_log_{st.session_state.team_a}_vs_{st.session_state.team_b}.txt",
+            mime="text/plain"
+        )
+
             
 # ----- Турнирная таблица -----
 st.divider()
