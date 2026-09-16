@@ -203,7 +203,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
                 else:
                     score_b_add += 150
                     events.append(f"Снитч пойман командой {team_b}! +150")
-                snitch_status = "Пойман”
+                    snitch_status = "Пойман”
 
     # ======================
     # Итоговый текст
