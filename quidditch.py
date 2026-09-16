@@ -373,7 +373,7 @@ with tab1:
 
             st.divider()
             st.subheader("История раундов")
-            if st.session_state.log
+            if st.session_state.log:
             for entry in reversed(st.session_state.log):
                 st.markdown(entry)
                 st.markdown("---")
