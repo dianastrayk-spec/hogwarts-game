@@ -356,7 +356,7 @@ with tab1:
                 import pandas as pd
 
                 # Сохраняем данные для скачивания
-                st.session_state.last_match_csv = pd.DataFrame([final_match]).to_csv(index=False, encoding="utf-8-sig").endcode("utf-8-sig")
+                st.session_state.last_match_csv = pd.DataFrame([final_match]).to_csv(index=False, encoding="utf-8-sig").encode("utf-8-sig")
                 st.session_state.last_match_name = f"{st.session_state.team_a}_vs_{st.session_state.team_b}.csv"
                 st.session_state.show_download = True
 
