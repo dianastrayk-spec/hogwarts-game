@@ -175,35 +175,35 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
             val = extra["value"]
             check = extra["check_type"]
             
-            if pos == "Ловец":
-                if val <= 4:
-                    events.append(f"Ловец ({val}): Снитч ускользнул! Погоня начинается заново.")
-                    snitch_status = "Ускользнул"
+        if pos == "Ловец":
+            if val <= 4:
+                events.append(f"Ловец ({val}): Снитч ускользнул! Погоня начинается заново.")
+                snitch_status = "Ускользнул"
                 
-                elif val <= 8:
-                    events.append(f"Ловец ({val}): Снитч быстро поймал соперник!")
-                    # Соперник получает +150
-                    if new_possession == "A":
-                        score_b_add += 150
-                        events.append(f"Снитч пойман командой {team_b}! +150")
-                    else:
-                        score_a_add += 150
-                        events.append(f"Снитч пойман командой {team_a}! +150")
-                    snitch_status = "Пойман соперником"
+            elif val <= 8:
+                events.append(f"Ловец ({val}): Снитч быстро поймал соперник!")
+                # Соперник получает +150
+                if new_possession == "A":
+                    score_b_add += 150
+                    events.append(f"Снитч пойман командой {team_b}! +150")
+                else:
+                    score_a_add += 150
+                    events.append(f"Снитч пойман командой {team_a}! +150")
+                snitch_status = "Пойман соперником"
                 
-                elif val <= 10:
-                    events.append(f"Ловец ({val}): Погоня на равных! Нужен дополнительный бросок Чёт/Нечет, чтобы определить победителя.")
-                    snitch_status = "Погоня на равных"
+            elif val <= 10:
+                events.append(f"Ловец ({val}): Погоня на равных! Нужен дополнительный бросок Чёт/Нечет, чтобы определить победителя.")
+                snitch_status = "Погоня на равных"
                 
-                else:  # 11–13
-                    events.append(f"Ловец ({val}): Снитч стопроцентно пойман!")
-                    if new_possession == "A":
-                        score_a_add += 150
-                        events.append(f"Снитч пойман командой {team_a}! +150")
-                    else:
-                        score_b_add += 150
-                        events.append(f"Снитч пойман командой {team_b}! +150")
-                    snitch_status = "Пойман”
+            else:  # 11–13
+                events.append(f"Ловец ({val}): Снитч стопроцентно пойман!")
+                if new_possession == "A":
+                    score_a_add += 150
+                    events.append(f"Снитч пойман командой {team_a}! +150")
+                else:
+                    score_b_add += 150
+                    events.append(f"Снитч пойман командой {team_b}! +150")
+                snitch_status = "Пойман”
 
             
             elif check == "Попал / Не попал":
