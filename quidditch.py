@@ -158,86 +158,6 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         elif final_seeker_roll == 9:
             snitch_status = "Попытка поимки"
             events.append("Снитч почти в руках! Нужен дополнительный бросок на поимку.")
-            
-            # Дополнительный бросок (пока случайный, потом можно сделать поле ввода)
-            import random
-            catch_roll = random.randint(1, 10)
-            events.append(f"Дополнительный бросок на поимку: {catch_roll}")
-            
-            if catch_roll >= 7:
-                # Пока упрощённо — ловит команда с владением квоффлом
-                if new_possession == "A":
-                    score_a_add += 150
-                    events.append(f"Снитч пойман командой {team_a}! +150 очков")
-                    snitch_status = f"Пойман ({team_a})"
-                else:
-                    score_b_add += 150
-                    events.append(f"Снитч пойман командой {team_b}! +150 очков")
-                    snitch_status = f"Пойман ({team_b})"
-            else:
-                events.append("Снитч выскользнул в последний момент!")
-                snitch_status = "Упущен"
-        
-        else:  # 10 и выше
-            snitch_status = "Попытка поимки"
-            events.append("Легендарный момент! Снитч на расстоянии вытянутой руки.")
-            
-            import random
-            catch_roll = random.randint(1, 10)
-            events.append(f"Дополнительный бросок на поимку: {catch_roll}")
-            
-            if catch_roll >= 5:
-                if new_possession == "A":
-                    score_a_add += 150
-                    events.append(f"Снитч пойман командой {team_a}! +150 очков")
-                    snitch_status = f"Пойман ({team_a})"
-                else:
-                    score_b_add += 150
-                    events.append(f"Снитч пойман командой {team_b}! +150 очков")
-                    snitch_status = f"Пойман ({team_b})"
-            else:
-                events.append("Невероятный уворот снитча! Погоня продолжается.")
-                snitch_status = "Опасная погоня"
-
-        st.markdown("---")
-        st.subheader("Дополнительные броски")
-        
-        # Кнопка добавить новый бросок
-        if st.button("+ Добавить бросок"):
-            st.session_state.extra_rolls.append({"position": "Ловец", "value": 5})
-            st.rerun()
-        
-        # Отображаем текущие дополнительные броски
-        positions = ["Ловец", "Охотник", "Загонщик", "Вратарь"]
-        
-        for i, roll in enumerate(st.session_state.extra_rolls):
-            cols = st.columns([3, 2, 1])
-                    
-            with cols[0]:
-                st.session_state.extra_rolls[i]["position"] = st.selectbox(
-                    f"Позиция {i+1}",
-                     positions,
-                    index=positions.index(roll["position"]),
-                    key=f"extra_pos_{i}"
-                )
-                    
-            with cols[1]:
-                st.session_state.extra_rolls[i]["value"] = st.number_input(
-                    f"Бросок {i+1}",
-                    min_value=1,
-                    max_value=10,
-                    value=roll["value"],
-                    key=f"extra_val_{i}"
-                )
-                    
-            with cols[2]:
-                if st.button("Удалить", key=f"del_extra_{i}"):
-                    st.session_state.extra_rolls.pop(i)
-                    st.rerun()
-        
-        if st.session_state.extra_rolls:
-            st.info(f"Сейчас дополнительных бросков: {len(st.session_state.extra_rolls)}")
-
 
     # ======================
     # Итоговый текст
@@ -384,6 +304,45 @@ with tab1:
                 "Ловец (1-10)", 
                 min_value=1, max_value=10, value=5, key="seeker"
             )
+            
+        st.markdown("---")
+        st.subheader("Дополнительные броски")
+        
+        # Кнопка добавить новый бросок
+        if st.button("+ Добавить бросок"):
+            st.session_state.extra_rolls.append({"position": "Ловец", "value": 5})
+            st.rerun()
+        
+        # Отображаем текущие дополнительные броски
+        positions = ["Ловец", "Охотник", "Загонщик", "Вратарь"]
+        
+        for i, roll in enumerate(st.session_state.extra_rolls):
+            cols = st.columns([3, 2, 1])
+                    
+            with cols[0]:
+                st.session_state.extra_rolls[i]["position"] = st.selectbox(
+                    f"Позиция {i+1}",
+                     positions,
+                    index=positions.index(roll["position"]),
+                    key=f"extra_pos_{i}"
+                )
+                    
+            with cols[1]:
+                st.session_state.extra_rolls[i]["value"] = st.number_input(
+                    f"Бросок {i+1}",
+                    min_value=1,
+                    max_value=10,
+                    value=roll["value"],
+                    key=f"extra_val_{i}"
+                )
+                    
+            with cols[2]:
+                if st.button("Удалить", key=f"del_extra_{i}"):
+                    st.session_state.extra_rolls.pop(i)
+                    st.rerun()
+        
+        if st.session_state.extra_rolls:
+            st.info(f"Сейчас дополнительных бросков: {len(st.session_state.extra_rolls)}")
 
         with col2:
             st.markdown("### Действия")
