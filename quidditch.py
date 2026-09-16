@@ -373,9 +373,9 @@ with tab1:
 
     st.divider()
     st.subheader("История раундов")
-    for entry in reversed(st.session_state.log):
-    st.markdown(entry)
-    st.markdown("---")
+        for entry in reversed(st.session_state.log):
+        st.markdown(entry)
+        st.markdown("---")
 
 with tab2:
     st.subheader("Чемпионат и история матчей")
