@@ -127,30 +127,76 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
             events.append("ГОЛ!")
 
     # ======================
-    # 4. ЛОВЕЦ
+    # 4. ЛОВЕЦ (обновление)
     # ======================
-    seeker_bonus = 3 if round_num >= 3 else 0
+     seeker_bonus = 3 if round_num >= 3 else 0
     final_seeker_roll = roll_seeker + seeker_bonus
 
-    if final_seeker_roll <= 4:
-        snitch_status = "Не появился"
-        events.append("Снитч не видно")
-    elif final_seeker_roll <= 6:
-        snitch_status = "Появился — начало погони"
-        events.append("Снитч появился! Ловцы начинают погоню")
-    elif final_seeker_roll <= 9:
-        snitch_status = "Опасная погоня"
-        events.append("Снитч очень близко!")
-    else:
-        snitch_status = "Снитч пойман"
-        # Упрощённо: пока пусть ловит команда, у которой владение
-        snitch_caught_by = new_possession
-        if new_possession == "A":
-            score_a_add += 150
-            events.append(f"Снитч пойман игроком {team_a}! +150 очков")
+    # В первые 3 раунда снитч поймать нельзя
+    if round_num <= 3:
+        if final_seeker_roll <= 6:
+            snitch_status = "Не появился"
+            events.append("Снитч не видно.")
         else:
-            score_b_add += 150
-            events.append(f"Снитч пойман игроком {team_b}! +150 очков")
+            snitch_status = "Появился мельком"
+            events.append("Снитч на мгновение мелькнул, но сразу исчез. Ловцы его упустили.")
+    else:
+        # С 4-го раунда полноценная логика
+        if final_seeker_roll <= 4:
+            snitch_status = "Не появился"
+            events.append("Снитч не видно.")
+        
+        elif final_seeker_roll <= 6:
+            snitch_status = "Появился — начало погони"
+            events.append("Снитч появился! Ловцы начинают погоню.")
+        
+        elif final_seeker_roll <= 8:
+            snitch_status = "Опасная погоня"
+            events.append("Опасная погоня! Снитч очень близко, ловцы идут почти плечом к плечу.")
+        
+        elif final_seeker_roll == 9:
+            snitch_status = "Попытка поимки"
+            events.append("Снитч почти в руках! Нужен дополнительный бросок на поимку.")
+            
+            # Дополнительный бросок (пока случайный, потом можно сделать поле ввода)
+            import random
+            catch_roll = random.randint(1, 10)
+            events.append(f"Дополнительный бросок на поимку: {catch_roll}")
+            
+            if catch_roll >= 7:
+                # Пока упрощённо — ловит команда с владением квоффлом
+                if new_possession == "A":
+                    score_a_add += 150
+                    events.append(f"Снитч пойман командой {team_a}! +150 очков")
+                    snitch_status = f"Пойман ({team_a})"
+                else:
+                    score_b_add += 150
+                    events.append(f"Снитч пойман командой {team_b}! +150 очков")
+                    snitch_status = f"Пойман ({team_b})"
+            else:
+                events.append("Снитч выскользнул в последний момент!")
+                snitch_status = "Упущен"
+        
+        else:  # 10 и выше
+            snitch_status = "Попытка поимки"
+            events.append("Легендарный момент! Снитч на расстоянии вытянутой руки.")
+            
+            import random
+            catch_roll = random.randint(1, 10)
+            events.append(f"Дополнительный бросок на поимку: {catch_roll}")
+            
+            if catch_roll >= 5:
+                if new_possession == "A":
+                    score_a_add += 150
+                    events.append(f"Снитч пойман командой {team_a}! +150 очков")
+                    snitch_status = f"Пойман ({team_a})"
+                else:
+                    score_b_add += 150
+                    events.append(f"Снитч пойман командой {team_b}! +150 очков")
+                    snitch_status = f"Пойман ({team_b})"
+            else:
+                events.append("Невероятный уворот снитча! Погоня продолжается.")
+                snitch_status = "Опасная погоня”
 
     # ======================
     # Итоговый текст
