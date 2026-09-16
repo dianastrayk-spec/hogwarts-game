@@ -247,12 +247,12 @@ if st.session_state.extra_rolls:
     result_text += f"\n\n**Счёт раунда:** {team_a} +{score_a_add} | {team_b} +{score_b_add}"
 
     return {
-    "text": result_text,
-    "score_a": score_a_add,
-    "score_b": score_b_add,
-    "possession": new_possession,
-    "snitch_status": snitch_status,
-    "snitch_caught": snitch_caught_by is not None
+        "text": result_text,
+        "score_a": score_a_add,
+        "score_b": score_b_add,
+        "possession": new_possession,
+        "snitch_status": snitch_status,
+        "snitch_caught": snitch_caught_by is not None
     }
 
 # ======================
