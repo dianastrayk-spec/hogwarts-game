@@ -237,7 +237,16 @@ with st.sidebar:
         for effect in st.session_state.active_effects:
             st.write(f"- {effect}")
 
-
+    if st.session_state.get("show_download"):
+        st.download_button(
+            label="Скачать результат последнего матча",
+            data=st.session_state.last_match_csv,
+            file_name=st.session_state.last_match_name,
+            mime="text/csv"
+        )
+        if st.button("Скрыть кнопку скачивания"):
+            st.session_state.show_download = False
+            st.rerun()
 
 # ======================
 # ОСНОВНАЯ ЧАСТЬ
@@ -344,17 +353,10 @@ with tab1:
     
                 st.session_state.matches.append(final_match)
 
-                # Предлагаем скачать результат
-                import pandas as pd
-                df_match = pd.DataFrame([final_match])
-                csv = df_match.to_csv(index=False, encoding="utf-8-sig").encode("utf-8-sig")
-
-                st.download_button(
-                    label="Скачать результат этого матча",
-                    data=csv,
-                    file_name=f"{st.session_state.team_a}_vs_{st.session_state.team_b}.csv",
-                    mime="text/csv"
-                )
+                # Сохраняем данные для скачивания
+                st.session_state.last_match_csv = pd.DataFrame([final_match]).to_csv(index=False, encoding="utf-8-sig").endcode("utf-8-sig")
+                st.session_state.last_match_name = f"{st.session_state.team_a}_vs_{st.session_state.team_b}.csv"
+                st.session_state.show_download = True
 
                 # Сбрасываем матч
                 st.session_state.match_active = False
@@ -369,7 +371,6 @@ with tab1:
             
                 st.success("Матч завершён и сохранён в историю!")
                 st.rerun()
-
 
             st.divider()
             st.subheader("История раундов")
