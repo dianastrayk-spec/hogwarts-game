@@ -320,8 +320,56 @@ with tab1:
                 st.rerun()
 
             if st.button("Завершить матч", use_container_width=True):
-                st.session_state.match_active = False
-                st.success("Матч завершён")
+                # Определяем, кто поймал снитч
+                if st.session_state.score_a > st.session_state.score_b:
+                    snitch_winner = st.session_state.team_a
+                elif st.session_state.score_b > st.session_state.score_a:
+                    snitch_winner = st.session_state.team_b
+                else:
+                    snitch_winner = "Никто"
+
+                # Создаём запись о матче
+                final_match = {
+                    "date": str(datetime.now().date()),
+                    "team_a": st.session_state.team_a,
+                    "team_b": st.session_state.team_b,
+                    "score_a": st.session_state.score_a,
+                    "score_b": st.session_state.score_b,
+                    "snitch": snitch_winner
+                }
+
+                # Сохраняем в историю
+                if "matches" not in st.session_state:
+                    st.session_state.matches = []
+    
+                st.session_state.matches.append(final_match)
+
+                # Предлагаем скачать результат
+                import pandas as pd
+                df_match = pd.DataFrame([final_match])
+                csv = df_match.to_csv(index=False, encoding="utf-8-sig").encode("utf-8-sig")
+
+                st.download_button(
+                    label="Скачать результат этого матча",
+                    data=csv,
+                    file_name=f"{st.session_state.team_a}_vs_{st.session_state.team_b}.csv",
+                    mime="text/csv"
+                )
+
+    # Сбрасываем матч
+    st.session_state.match_active = False
+    st.session_state.round = 1
+    st.session_state.score_a = 0
+    st.session_state.score_b = 0
+    st.session_state.possession = None
+    st.session_state.snitch_status = "Не появился"
+    st.session_state.bludger_control = None
+    st.session_state.active_effects = []
+    st.session_state.log = []
+
+    st.success("Матч завершён и сохранён в историю!")
+    st.rerun()
+
 
         st.divider()
         st.subheader("История раундов")
