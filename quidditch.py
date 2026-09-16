@@ -130,8 +130,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     # ======================
     # 4. ЛОВЕЦ (обновление)
     # ======================
-    seeker_bonus = 3 if round_num >= 3 else 0
-    final_seeker_roll = roll_seeker + seeker_bonus
+    final_seeker_roll = roll_seeker
 
     # В первые 3 раунда снитч поймать нельзя
     if round_num <= 3:
@@ -158,6 +157,42 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         elif final_seeker_roll == 9:
             snitch_status = "Попытка поимки"
             events.append("Снитч почти в руках! Нужен дополнительный бросок на поимку.")
+
+    # ======================
+    # Обработка дополнительных бросков
+    # ======================
+    if st.session_state.get("extra_rolls"):
+        events.append("--- Дополнительные броски ---")
+        
+        for extra in st.session_state.extra_rolls:
+            pos = extra["position"]
+            val = extra["value"]
+            check = extra["check_type"]
+            
+            if pos == "Ловец":
+                # Специальная таблица для ловца (1–13)
+                if val <= 4:
+                    events.append(f"Ловец ({val}): Снитч пропал из виду")
+                    snitch_status = "Пропал из виду"
+                elif val <= 8:
+                    events.append(f"Ловец ({val}): Снитч у команды соперника")
+                    snitch_status = "У соперника"
+                elif val <= 10:
+                    events.append(f"Ловец ({val}): Тяжёлая погоня на равных! Нужен дополнительный бросок Чёт/Нечет")
+                    snitch_status = "Погоня на равных"
+                else:  # 11–13
+                    events.append(f"Ловец ({val}): Снитч у вас в руках!")
+                    # Пока даём +150 команде, у которой владение
+                    if new_possession == "A":
+                        score_a_add += 150
+                        events.append(f"Снитч пойман командой {team_a}! +150")
+                    else:
+                        score_b_add += 150
+                        events.append(f"Снитч пойман командой {team_b}! +150")
+                    snitch_status = "Пойман"
+            
+            elif check == "Попал / Не попал":
+                if val <= 5:
 
     # ======================
     # Итоговый текст
