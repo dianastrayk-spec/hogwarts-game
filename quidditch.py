@@ -221,7 +221,7 @@ for i, roll in enumerate(st.session_state.extra_rolls):
             key=f"extra_pos_{i}"
         )
             
-     with cols[1]:
+    with cols[1]:
         st.session_state.extra_rolls[i]["value"] = st.number_input(
             f"Бросок {i+1}",
             min_value=1,
