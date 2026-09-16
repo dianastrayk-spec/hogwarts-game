@@ -192,7 +192,15 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
                     snitch_status = "Пойман"
             
             elif check == "Попал / Не попал":
-                if val <= 5:
+                result = "Промах" if val <= 5 else "Попадание!"
+                events.append(f"{pos} ({val}): {result}")
+
+            elif chek == "Чёт / Нечет":
+                result = "ЧетноеЭ if val % 2 == 0 else "Нечетное"
+                events.append(f"{pos} ({val}): {result}")
+
+            else:
+                events.append(f"{pos} ({val}): {check}")
 
     # ======================
     # Итоговый текст
