@@ -199,44 +199,44 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
                 events.append("Невероятный уворот снитча! Погоня продолжается.")
                 snitch_status = "Опасная погоня"
 
-st.markdown("---")
-st.subheader("Дополнительные броски")
-
-# Кнопка добавить новый бросок
-if st.button("+ Добавить бросок"):
-    st.session_state.extra_rolls.append({"position": "Ловец", "value": 5})
-    st.rerun()
-
-# Отображаем текущие дополнительные броски
-positions = ["Ловец", "Охотник", "Загонщик", "Вратарь"]
-
-for i, roll in enumerate(st.session_state.extra_rolls):
-    cols = st.columns([3, 2, 1])
-            
-    with cols[0]:
-        st.session_state.extra_rolls[i]["position"] = st.selectbox(
-            f"Позиция {i+1}",
-             positions,
-            index=positions.index(roll["position"]),
-            key=f"extra_pos_{i}"
-        )
-            
-    with cols[1]:
-        st.session_state.extra_rolls[i]["value"] = st.number_input(
-            f"Бросок {i+1}",
-            min_value=1,
-            max_value=10,
-            value=roll["value"],
-            key=f"extra_val_{i}"
-        )
-            
-    with cols[2]:
-        if st.button("Удалить", key=f"del_extra_{i}"):
-            st.session_state.extra_rolls.pop(i)
-            st.rerun()
-
-if st.session_state.extra_rolls:
-    st.info(f"Сейчас дополнительных бросков: {len(st.session_state.extra_rolls)}")
+    st.markdown("---")
+    st.subheader("Дополнительные броски")
+    
+    # Кнопка добавить новый бросок
+    if st.button("+ Добавить бросок"):
+        st.session_state.extra_rolls.append({"position": "Ловец", "value": 5})
+        st.rerun()
+    
+    # Отображаем текущие дополнительные броски
+    positions = ["Ловец", "Охотник", "Загонщик", "Вратарь"]
+    
+    for i, roll in enumerate(st.session_state.extra_rolls):
+        cols = st.columns([3, 2, 1])
+                
+        with cols[0]:
+            st.session_state.extra_rolls[i]["position"] = st.selectbox(
+                f"Позиция {i+1}",
+                 positions,
+                index=positions.index(roll["position"]),
+                key=f"extra_pos_{i}"
+            )
+                
+        with cols[1]:
+            st.session_state.extra_rolls[i]["value"] = st.number_input(
+                f"Бросок {i+1}",
+                min_value=1,
+                max_value=10,
+                value=roll["value"],
+                key=f"extra_val_{i}"
+            )
+                
+        with cols[2]:
+            if st.button("Удалить", key=f"del_extra_{i}"):
+                st.session_state.extra_rolls.pop(i)
+                st.rerun()
+    
+    if st.session_state.extra_rolls:
+        st.info(f"Сейчас дополнительных бросков: {len(st.session_state.extra_rolls)}")
 
 
     # ======================
