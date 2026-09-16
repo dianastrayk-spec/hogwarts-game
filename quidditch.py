@@ -347,8 +347,8 @@ with tab1:
                 min_value=1, max_value=10, value=5, key="keeper"
             )
             roll_seeker = st.number_input(
-                "Ловец (1-10)", 
-                min_value=1, max_value=10, value=5, key="seeker"
+                "Ловец (1-13)", 
+                min_value=1, max_value=13, value=5, key="seeker"
             )
             
         st.markdown("---")
@@ -394,7 +394,7 @@ with tab1:
                 st.session_state.extra_rolls[i]["value"] = st.number_input(
                     "Результат",
                     min_value=1,
-                    max_value=10,
+                    max_value=13,
                     value=roll.get("value", 5),
                     key=f"extra_val_{i}"
                 )
