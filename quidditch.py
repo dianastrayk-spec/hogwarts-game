@@ -356,26 +356,26 @@ with tab1:
                     mime="text/csv"
                 )
 
-    # Сбрасываем матч
-    st.session_state.match_active = False
-    st.session_state.round = 1
-    st.session_state.score_a = 0
-    st.session_state.score_b = 0
-    st.session_state.possession = None
-    st.session_state.snitch_status = "Не появился"
-    st.session_state.bludger_control = None
-    st.session_state.active_effects = []
-    st.session_state.log = []
+                # Сбрасываем матч
+                st.session_state.match_active = False
+                st.session_state.round = 1
+                st.session_state.score_a = 0
+                st.session_state.score_b = 0
+                st.session_state.possession = None
+                st.session_state.snitch_status = "Не появился"
+                st.session_state.bludger_control = None
+                st.session_state.active_effects = []
+                st.session_state.log = []
+            
+                st.success("Матч завершён и сохранён в историю!")
+                st.rerun()
 
-    st.success("Матч завершён и сохранён в историю!")
-    st.rerun()
 
-
-    st.divider()
-    st.subheader("История раундов")
-        for entry in reversed(st.session_state.log):
-            st.markdown(entry)
-            st.markdown("---")
+                st.divider()
+                st.subheader("История раундов")
+                for entry in reversed(st.session_state.log):
+                    st.markdown(entry)
+                    st.markdown("---")
 
 with tab2:
     st.subheader("Чемпионат и история матчей")
