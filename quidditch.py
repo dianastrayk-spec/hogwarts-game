@@ -307,42 +307,60 @@ with tab1:
             
         st.markdown("---")
         st.subheader("Дополнительные броски")
-        
-        # Кнопка добавить новый бросок
+
         if st.button("+ Добавить бросок"):
-            st.session_state.extra_rolls.append({"position": "Ловец", "value": 5})
+            st.session_state.extra_rolls.append({
+                "position": "Загонщик",
+                "check_type": "Попал / Не попал",
+                "value": 5
+            })
             st.rerun()
-        
-        # Отображаем текущие дополнительные броски
+
         positions = ["Ловец", "Охотник", "Загонщик", "Вратарь"]
-        
+        check_types = [
+            "Попал / Не попал", 
+            "Чёт / Нечет", 
+            "По таблице позиции",
+            "Просто значение"
+        ]
+
         for i, roll in enumerate(st.session_state.extra_rolls):
-            cols = st.columns([3, 2, 1])
-                    
+            st.markdown(f"**Бросок {i+1}**")
+            cols = st.columns([2.5, 3, 2, 1])
+
             with cols[0]:
                 st.session_state.extra_rolls[i]["position"] = st.selectbox(
-                    f"Позиция {i+1}",
-                     positions,
-                    index=positions.index(roll["position"]),
+                    "Позиция",
+                    positions,
+                    index=positions.index(roll.get("position", "Загонщик")),
                     key=f"extra_pos_{i}"
                 )
-                    
+
             with cols[1]:
+                st.session_state.extra_rolls[i]["check_type"] = st.selectbox(
+                    "Тип проверки",
+                    check_types,
+                    index=check_types.index(roll.get("check_type", "Попал / Не попал")),
+                    key=f"extra_type_{i}"
+                )
+
+            with cols[2]:
                 st.session_state.extra_rolls[i]["value"] = st.number_input(
-                    f"Бросок {i+1}",
+                    "Результат",
                     min_value=1,
                     max_value=10,
-                    value=roll["value"],
+                    value=roll.get("value", 5),
                     key=f"extra_val_{i}"
                 )
-                    
-            with cols[2]:
+
+            with cols[3]:
+                st.write("")  # для выравнивания
+                st.write("")
                 if st.button("Удалить", key=f"del_extra_{i}"):
                     st.session_state.extra_rolls.pop(i)
                     st.rerun()
-        
-        if st.session_state.extra_rolls:
-            st.info(f"Сейчас дополнительных бросков: {len(st.session_state.extra_rolls)}")
+
+            st.markdown("---")
 
         with col2:
             st.markdown("### Действия")
