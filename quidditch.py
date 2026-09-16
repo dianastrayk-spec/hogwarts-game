@@ -371,12 +371,15 @@ with tab1:
                 st.rerun()
 
 
-                st.divider()
-                st.subheader("История раундов")
-                for entry in reversed(st.session_state.log):
-                    st.markdown(entry)
-                    st.markdown("---")
-
+            st.divider()
+            st.subheader("История раундов")
+            if st.session_state.log
+            for entry in reversed(st.session_state.log):
+                st.markdown(entry)
+                st.markdown("---")
+            else:
+                st.info (История раундов пока пуста")
+                
 with tab2:
     st.subheader("Чемпионат и история матчей")
 
