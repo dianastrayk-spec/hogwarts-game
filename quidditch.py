@@ -378,7 +378,7 @@ with tab1:
                 st.markdown(entry)
                 st.markdown("---")
             else:
-                st.info (История раундов пока пуста")
+                st.info ("История раундов пока пуста")
                 
 with tab2:
     st.subheader("Чемпионат и история матчей")
