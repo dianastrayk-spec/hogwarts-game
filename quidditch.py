@@ -137,9 +137,15 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         if final_seeker_roll <= 6:
             snitch_status = "Не появился"
             events.append("Снитч не видно.")
-        else:
-            snitch_status = "Появился мельком"
-            events.append("Снитч на мгновение мелькнул, но сразу исчез. Ловцы его упустили.")
+        elif final_seeker_roll <= 7:
+            snitch_status = "Появился - начало погони"
+            events.append("Снитч появился! Ловцы начинают погоню.")
+        elif final_seeker_roll <= 9:
+            snitch_status = "Опасная погоня"
+            events.append("Опасная погоня! Снитч очень близко.")
+        else: # 10-13
+            snitch_status = "Почти пойман"
+            events.append("Снитч почти в руках! Нужен дополнительный бросок Ловца.")
     else:
         # С 4-го раунда полноценная логика
         if final_seeker_roll <= 4:
