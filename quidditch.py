@@ -129,7 +129,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     # ======================
     # 4. ЛОВЕЦ (обновление)
     # ======================
-     seeker_bonus = 3 if round_num >= 3 else 0
+    seeker_bonus = 3 if round_num >= 3 else 0
     final_seeker_roll = roll_seeker + seeker_bonus
 
     # В первые 3 раунда снитч поймать нельзя
