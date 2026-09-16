@@ -196,7 +196,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
                     snitch_status = f"Пойман ({team_b})"
             else:
                 events.append("Невероятный уворот снитча! Погоня продолжается.")
-                snitch_status = "Опасная погоня”
+                snitch_status = "Опасная погоня”)
 
     # ======================
     # Итоговый текст
