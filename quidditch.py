@@ -192,7 +192,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
                     snitch_status = "Пойман"
             
             elif check == "Попал / Не попал":
-                if val <= 5:
+            if val <= 5:
 
     # ======================
     # Итоговый текст
