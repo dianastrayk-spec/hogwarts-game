@@ -196,7 +196,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
                 events.append(f"{pos} ({val}): {result}")
 
             elif chek == "Чёт / Нечет":
-                result = "ЧетноеЭ if val % 2 == 0 else "Нечетное"
+                result = "Четное" if val % 2 == 0 else "Нечетное"
                 events.append(f"{pos} ({val}): {result}")
 
             else:
