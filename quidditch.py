@@ -205,18 +205,6 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
                     events.append(f"Снитч пойман командой {team_b}! +150")
                 snitch_status = "Пойман”
 
-            
-            elif check == "Попал / Не попал":
-                result = "Промах" if val <= 5 else "Попадание!"
-                events.append(f"{pos} ({val}): {result}")
-
-            elif chek == "Чёт / Нечет":
-                result = "Четное" if val % 2 == 0 else "Нечетное"
-                events.append(f"{pos} ({val}): {result}")
-
-            else:
-                events.append(f"{pos} ({val}): {check}")
-
     # ======================
     # Итоговый текст
     # ======================
