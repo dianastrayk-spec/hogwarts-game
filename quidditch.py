@@ -129,7 +129,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     elif roll_beater == 3:
         events.append(f"Загонщики {hitting_team}: Неудачный удар - бладжер улетает в никуда")
    
-   elif roll_beater == 4:
+    elif roll_beater == 4:
        events.append (f"Загонщики {hitting_team}: Среднее отбитие — один охотник {target_team} нейтрализован (-1 в следующем раунде)")
        effects["chase_penalty"][target_side] = 1
        new_effects.append(f"Охотники {target_team}: - 1  в следующем раунде")
