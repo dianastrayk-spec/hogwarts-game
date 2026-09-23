@@ -312,6 +312,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         "snitch_status": snitch_status,
         "snitch_caught": snitch_caught_by is not None,
         "new_effects": new_effects
+        "effects": effects
     }
 
 # ======================
@@ -529,6 +530,9 @@ with tab1:
                 st.session_state.possession = result["possession"]
                 st.session_state.snitch_status = result["snitch_status"]
                 st.session_state.log.append(result["text"])
+
+                if "effects" in result:
+                    st.session_state.effects = result["effects"]
 
                 if "new_effects" in result and result["new_effects"]:
                     if "active_effects" not in st.session_state:
