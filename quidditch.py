@@ -118,7 +118,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
 
     if roll_beater == 7:
         events [-1] = f"Загонщики {hitting_team} вывел охотника команды {target_team} до конца игры!"
-        
+        new_effects.append(f"Охотник {target_team} выведен до конца матча"")
 
     # ======================
     # 3. ВРАТАРЬ
@@ -238,7 +238,8 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         "score_b": score_b_add,
         "possession": new_possession,
         "snitch_status": snitch_status,
-        "snitch_caught": snitch_caught_by is not None
+        "snitch_caught": snitch_caught_by is not None,
+        "new_effects": new_effects
     }
 
 # ======================
@@ -449,6 +450,13 @@ with tab1:
                 st.session_state.possession = result["possession"]
                 st.session_state.snitch_status = result["snitch_status"]
                 st.session_state.log.append(result["text"])
+
+                if "new_effects" in result and result["new_effects"]:
+                    if "active_effects" not in st.session_state:
+                        st.session_state.active_effects = []
+                    for effect in result["new_effects"]:
+                        if effect not in st.session_state.active_effects:
+                            st.session_state.active_effects.append(effect)
 
                 st.success("Раунд рассчитан!")
                 st.rerun()
