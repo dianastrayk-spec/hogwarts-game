@@ -44,7 +44,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     effects = st.session_state.effects
 
     default_effects = {
-        chaser_penalty": {"A": 0, "B": 0},
+        "chaser_penalty": {"A": 0, "B": 0},
         "auto_goal": None,
         "Keeper_out": {"A": 0, "B": 0},
         "chaser_out": {"A": False, "B": False},
