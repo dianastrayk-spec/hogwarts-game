@@ -33,7 +33,8 @@ if "match_active" not in st.session_state:
         "auto_goal": None,
         "Keeper_out": {"A": 0, "B": 0},
         "chaser_out": {"A": False, "B": False},
-        "temp_out": {"A": 0, "B": 0}
+        "temp_out": {"A": 0, "B": 0},
+        "seeker_out": {"A": 0, "B": 0}
     }
 def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round_num, possession, team_a, team_b):
     """
@@ -355,7 +356,8 @@ with st.sidebar:
         "auto_goal": None,
         "Keeper_out": {"A": 0, "B": 0},
         "chaser_out": {"A": False, "B": False},
-        "temp_out": {"A": 0, "B": 0}
+        "temp_out": {"A": 0, "B": 0},
+        "seeker_out": {"A": 0, "B": 0}
     }
 
     st.divider()
