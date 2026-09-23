@@ -118,7 +118,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
 
     if roll_beater == 7:
         events [-1] = f"Загонщики {hitting_team} вывел охотника команды {target_team} до конца игры!"
-        new_effects.append(f"Охотник {target_team} выведен до конца матча"")
+        new_effects.append(f"Охотник {target_team} выведен до конца матча")
 
     # ======================
     # 3. ВРАТАРЬ
