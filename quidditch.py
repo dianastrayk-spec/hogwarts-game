@@ -310,7 +310,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         "possession": new_possession,
         "snitch_status": snitch_status,
         "snitch_caught": snitch_caught_by is not None,
-        "new_effects": new_effects
+        "new_effects": new_effects,
         "effects": effects
     }
 
