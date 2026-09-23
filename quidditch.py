@@ -99,11 +99,11 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         10: "Бладжер сбивает игрока соперника на 2 раунда"
     }
 
-    if new_possesion == "A":
+    if new_possession == "A":
         hitting_team = team_a
         target_team = team_b
         target_side = "B"
-    elif new_possesion == "B":
+    elif new_possession == "B":
         hitting_team = team_a
         target_team = team_b
         target_side = "A"
