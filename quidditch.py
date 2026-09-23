@@ -167,21 +167,29 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
    
     elif roll_beater == 4:
        events.append (f"Загонщики {hitting_team}: Среднее отбитие — один охотник {target_team} нейтрализован (-1 в следующем раунде)")
+       if "chaser_penalty" not in effects:
+            effects["chaser_penalty"] = {"A": False, "B": False}
        effects["chaser_penalty"][target_side] = 1
        new_effects.append(f"Охотники {target_team}: - 1  в следующем раунде")
 
     elif roll_beater == 5:
        events.append (f"Загонщики {hitting_team}: Хороший удар — два охотника {target_team} нейтрализован (-2 в следующем раунде)")
+        if "chaser_penalty" not in effects:
+             effects["chaser_penalty"] = {"A": False, "B": False}
        effects["chaser_penalty"][target_side] = 2
        new_effects.append(f"Охотники {target_team}: - 2  в следующем раунде")
 
     elif roll_beater == 6:
        events.append (f"Загонщики {hitting_team}: Удар по вратарю {target_team}! Автоматический гол")
+        if "auto_goal" not in effects:
+            effects["auto_goal"] = {None}
        effects["auto_goal"] = hitting_side
        new_effects.append(f"Автогол для {hitting_team}: следующем раунде")
       
     elif roll_beater == 7:
        events.append (f"Загонщики {hitting_team}: Вывел охотника команды {target_team} до конца игры!")
+        if "chaser_out" not in effects:
+            effects["chaser_out'] = {"A": False, "B": False}
        effects["chaser_out"][target_side] = True
        new_effects.append(f"Охотник {target_team} выведен до конца матча")    
 
@@ -190,7 +198,11 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
 
     elif roll_beater == 9:
         events.append (f"Загонщики {hitting_team}: Двойной удар! Вратарь {target_team} выходит на 2 раунда")
+        
+        if "keeper_out" not in effects:
+            effects ["keeper_out"] = {"A": 0, "B": 0}
         effects["keeper_out"][target_side] = 2
+        
         if hitting_side == "A":
             score_a_add += 20
         else:
@@ -200,6 +212,8 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
 
     elif roll_beater == 10:
          events.append (f"Загонщики {hitting_team}: Бладжер сбивает ловца {target_team} на 2 раунда!")
+          if "seeker_out" not in effects:
+              effects["seeker_out"] = {"A": 0, "B": 0}
          effects["seeker_out"][target_side] = 2
          new_effects.append(f"Ловец {target_team} выведен на 2 раунда")
 
