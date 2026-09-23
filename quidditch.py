@@ -121,6 +121,18 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         "seeker_out": {"A": 0, "B": 0}
     })
 
+    # 1. Автогол от удара загонщика
+    if effects.get("auto_goal") is not None:
+        auto_side = effects["auto_goal"]
+        if auto_side == "A":
+            score_a_add += 10
+            events.append(f"💣 АВТОМАТИЧЕСКИЙ ГОЛ команды {team_a} после удара бладжером по вратарю!")
+        else:
+            score_b_add += 10
+            events.append(f"💣 АВТОМАТИЧЕСКИЙ ГОЛ команды {team_b} после удара бладжером по вратарю!")
+
+        effects["auto_goal"] = None
+
     if roll_beater == 1:
         events.append(f"Загонщики {hitting_team}: Бладжер бьёт по своему игроку!")
 
