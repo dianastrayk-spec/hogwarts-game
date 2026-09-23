@@ -169,7 +169,6 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
 
     else:
         events.append (f"Загонщики {hitting_team}: Неизвестный результат ({roll_beater})")
-    }
 
     if new_possession == "A":
         hitting_team = team_a
