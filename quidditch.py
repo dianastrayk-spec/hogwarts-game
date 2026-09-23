@@ -174,7 +174,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
 
     elif roll_beater == 5:
        events.append (f"Загонщики {hitting_team}: Хороший удар — два охотника {target_team} нейтрализован (-2 в следующем раунде)")
-        if "chaser_penalty" not in effects:
+       if "chaser_penalty" not in effects:
              effects["chaser_penalty"] = {"A": False, "B": False}
        effects["chaser_penalty"][target_side] = 2
        new_effects.append(f"Охотники {target_team}: - 2  в следующем раунде")
