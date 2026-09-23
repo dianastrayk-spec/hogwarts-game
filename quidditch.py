@@ -183,8 +183,6 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         hitting_team = team_a
         target_team = team_b
         target_side = "B"
-        
-    events.append(f"Загонщики: {beater_events.get(roll_beater)}")
 
     new_effects = []
 
