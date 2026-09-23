@@ -37,6 +37,28 @@ if "match_active" not in st.session_state:
         "seeker_out": {"A": 0, "B": 0}
     }
 def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round_num, possession, team_a, team_b):
+
+    if "effects" not in st.session_state:
+        st.session_state.effects = {}
+
+    effects = st.session_state.effects
+
+    default_effects = {
+        chaser_penalty": {"A": 0, "B": 0},
+        "auto_goal": None,
+        "Keeper_out": {"A": 0, "B": 0},
+        "chaser_out": {"A": False, "B": False},
+        "temp_out": {"A": 0, "B": 0},
+        "seeker_out": {"A": 0, "B": 0}
+    }
+
+    for key, value in default_effects.items()
+        if key not in effects:
+            effects[key] = value if not isinstance(value, dict) else value.copy()
+        elif isinstance(value, dict):
+            for subkey in value:
+                if subkey not in effects[key]:
+                    effects[key][subkey] = value[subkey]
     """
     roll_a - бросок охотников команды А
     roll_b - бросок охотников команды Б
@@ -45,6 +67,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     roll_seeker - бросок ловца
     """
 
+    
     events = []
     score_a_add = 0
     score_b_add = 0
