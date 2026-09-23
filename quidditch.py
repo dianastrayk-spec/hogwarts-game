@@ -111,7 +111,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         target_team = team_b
 
     new_effects = []
-    effects = st.session_state.get("effects, {
+    effects = st.session_state.get("effects", {
         "chaser_penalty": {"A": 0, "B": 0},
         "auto_goal": None,
         "keeper_out": {"A": 0, "B": 0},
