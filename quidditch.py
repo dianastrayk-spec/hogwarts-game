@@ -52,7 +52,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         "seeker_out": {"A": 0, "B": 0}
     }
 
-    for key, value in default_effects.items()
+    for key, value in default_effects.items():
         if key not in effects:
             effects[key] = value if not isinstance(value, dict) else value.copy()
         elif isinstance(value, dict):
