@@ -98,7 +98,27 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         9: "Двойной удар! Вратарь соперника выходит на 2 раунда, +20 очков",
         10: "Бладжер сбивает игрока соперника на 2 раунда"
     }
+
+    if new_possesion == "A":
+        hitting_team = team_a
+        target_team = team_b
+        target_side = "B"
+    elif new_possesion == "B":
+        hitting_team = team_a
+        target_team = team_b
+        target_side = "A"
+    else:
+        hitting_team = team_a
+        target_team = team_b
+        target_side = "B"
+        
     events.append(f"Загонщики: {beater_events.get(roll_beater)}")
+
+    new_effects = []
+
+    if roll_beater == 7:
+        events [-1] = f"Загонщики {hitting_team} вывел охотника команды {target_team} до конца игры!"
+        
 
     # ======================
     # 3. ВРАТАРЬ
