@@ -116,8 +116,8 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
         "auto_goal": None,
         "keeper_out": {"A": 0, "B": 0},
         "chaser_out": {"A": False, "B": False},
-        "temp_out": {"A": 0, "B": 0}
-        "seeker_out": {"A": 0, "B": 0},
+        "temp_out": {"A": 0, "B": 0},
+        "seeker_out": {"A": 0, "B": 0}
     })
 
     if roll_beater == 1:
