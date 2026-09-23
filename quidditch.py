@@ -121,31 +121,31 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     })
 
     if roll_beater == 1:
-        events.append(f"Загонщики {hitting_team}: "Бладжер бьёт по своему игроку!")
+        events.append(f"Загонщики {hitting_team}: Бладжер бьёт по своему игроку!")
 
     elif roll_beater == 2:
-        events.append(f"Загонщики {hitting_team}: "Фол! Назначается пенальти")
+        events.append(f"Загонщики {hitting_team}: Фол! Назначается пенальти")
 
     elif roll_beater == 3:
-        events.append(f"Загонщики {hitting_team}: "Неудачный удар - бладжер улетает в никуда")
+        events.append(f"Загонщики {hitting_team}: Неудачный удар - бладжер улетает в никуда")
    
    elif roll_beater == 4:
-       events.append (f"Загонщики {hitting_team}: "Среднее отбитие — один охотник {target_team} нейтрализован (-1 в следующем раунде)")
+       events.append (f"Загонщики {hitting_team}: Среднее отбитие — один охотник {target_team} нейтрализован (-1 в следующем раунде)")
        effects["chase_penalty"][target_side] = 1
        new_effects.append(f"Охотники {target_team}: - 1  в следующем раунде")
 
     elif roll_beater == 5:
-       events.append (f"Загонщики {hitting_team}: "Хороший удар — два охотника {target_team} нейтрализован (-2 в следующем раунде)")
+       events.append (f"Загонщики {hitting_team}: Хороший удар — два охотника {target_team} нейтрализован (-2 в следующем раунде)")
        effects["chase_penalty"][target_side] = 2
        new_effects.append(f"Охотники {target_team}: - 2  в следующем раунде")
 
     elif roll_beater == 6:
-       events.append (f"Загонщики {hitting_team}: "Удар по вратарю {target_team}! Автоматический гол")
+       events.append (f"Загонщики {hitting_team}: Удар по вратарю {target_team}! Автоматический гол")
        effects["auto_goal"] = hitting_side
        new_effects.append(f"Автогол для {hitting_team}: следующем раунде")
       
     elif roll_beater == 7:
-       events.append (f"Загонщики {hitting_team}: "Вывел охотника команды {target_team} до конца игры!")
+       events.append (f"Загонщики {hitting_team}: Вывел охотника команды {target_team} до конца игры!")
        effects["chaser_out"][target_side] = True
        new_effects.append(f"Охотник {target_team} выведен до конца матча")    
 
