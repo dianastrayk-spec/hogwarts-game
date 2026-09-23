@@ -189,7 +189,7 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     elif roll_beater == 7:
        events.append (f"Загонщики {hitting_team}: Вывел охотника команды {target_team} до конца игры!")
        if "chaser_out" not in effects:
-            effects["chaser_out'] = {"A": False, "B": False}
+            effects["chaser_out"] = {"A": False, "B": False}
        effects["chaser_out"][target_side] = True
        new_effects.append(f"Охотник {target_team} выведен до конца матча")    
 
