@@ -208,6 +208,13 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
     # Гол происходит только если была атака (значения 2,6,8,9,10 у охотников)
     attack_values = [2, 6, 8, 9, 10]
     if active_roll in attack_values:
+        if new_possession == "A":
+            defending_team = team_b
+            attacking_team = team_a
+        else:
+            defending_team = team_a
+            attacking_team = team_b
+            
         keeper_events = {
             1: "Провал — ГОЛ!",
             2: "Мяч проскользнул — ГОЛ!",
@@ -220,14 +227,14 @@ def calculate_round(roll_a, roll_b, roll_beater, roll_keeper, roll_seeker, round
             9: "Героический прыжок! Ответный удар по воротам",
             10: "Легендарный сейв!"
         }
-        events.append(f"Вратарь: {keeper_events.get(roll_keeper)}")
+        events.append(f"Вратарь {defending_team} : {keeper_events.get(roll_keeper)}")
 
         if roll_keeper in [1, 2, 3]:
             if new_possession == "A":
                 score_a_add += 10
             else:
                 score_b_add += 10
-            events.append("ГОЛ!")
+            events.append(f"ГОЛ команды {attacking_team}!")
 
     # ======================
     # 4. ЛОВЕЦ (обновление)
